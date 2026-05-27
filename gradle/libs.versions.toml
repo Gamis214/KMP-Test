@@ -16,6 +16,7 @@ material3 = "1.11.0-alpha07"
 kotlinx-datetime-ext = "0.8.0"
 koin = "4.2.1"
 skie = "0.10.12"
+coil = "3.0.0-alpha06"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -43,6 +44,9 @@ koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 # Koin exclusivo solo para uso en (androidMain)
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+# Coil para la carga de imagenes
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
