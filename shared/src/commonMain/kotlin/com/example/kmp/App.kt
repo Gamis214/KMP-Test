@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kmp.koin.modules.CountriesModule
 import kmp.shared.generated.resources.Res
 import kmp.shared.generated.resources.eg
 import kmp.shared.generated.resources.fr
@@ -41,17 +42,21 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
+import org.koin.core.Koin
 import kotlin.time.Clock
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
 
-        var timeAtLocation by remember { mutableStateOf("No location selected") }
-        var showCountries by remember { mutableStateOf(false) }
-        var selectedOption by remember { mutableStateOf(getCountries()[0].name) }
+    val listOfCountries = koinInject<CountriesModule>()
+    var timeAtLocation by remember { mutableStateOf("No location selected") }
+    var showCountries by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf(listOfCountries.getCountries()[0].name) }
+
+    MaterialTheme {
 
         Column(
             modifier = Modifier
@@ -90,7 +95,7 @@ fun App() {
                     expanded = showCountries,
                     onDismissRequest = { showCountries = false }
                 ) {
-                    getCountries().forEach { (nameCountry,zoneCountry,imageCountry) ->
+                    listOfCountries.getCountries().forEach { (nameCountry,zoneCountry,imageCountry) ->
                         DropdownMenuItem(
                             text = {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -121,23 +126,9 @@ fun App() {
     }
 }
 
-data class Country(
-    val name: String,
-    val zone: TimeZone,
-    val imageCountry: DrawableResource
-)
-
 fun currentTimeAt(location: String,zone: TimeZone): String{
     fun LocalTime.formatted() = "$hour:$minute:$second"
     val time = Clock.System.now()
     val localTime = time.toLocalDateTime(zone).time
     return "The time in $location is ${localTime.formatted()}"
 }
-
-fun getCountries() = listOf(
-    Country("Japan", TimeZone.of("Asia/Tokyo"), Res.drawable.jp),
-    Country("France", TimeZone.of("Europe/Paris"), Res.drawable.fr),
-    Country("Mexico", TimeZone.of("America/Mexico_City"), Res.drawable.mx),
-    Country("Indonesia", TimeZone.of("Asia/Jakarta"), Res.drawable.id),
-    Country("Egypt", TimeZone.of("Africa/Cairo"), Res.drawable.eg),
-)

@@ -6,20 +6,6 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_11
-    }
-}
-dependencies {
-    implementation(projects.shared)
-
-    implementation(libs.androidx.activity.compose)
-
-    implementation(libs.compose.uiToolingPreview)
-    debugImplementation(libs.compose.uiTooling)
-}
-
 android {
     namespace = "com.example.kmp"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -45,4 +31,21 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_11
+    }
+}
+
+dependencies {
+    implementation(projects.shared)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.compose.uiToolingPreview)
+    //Integracion de koin para AndroidApp
+    implementation(libs.koin.android)
+    implementation(libs.koin.core)
+
+    debugImplementation(libs.compose.uiTooling)
 }
