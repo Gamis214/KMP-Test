@@ -4,5 +4,10 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

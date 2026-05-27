@@ -55,8 +55,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewModel)
             //Coil (Carga de imagenes)
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network)
+            implementation(libs.coil.network.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
